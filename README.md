@@ -6,12 +6,13 @@ Python wrapper for National Instruments high speed digitizer interface.
 This wrapper is based on boost-python and is tested to run on Windows 7 with NI-SCOPE 4.1.
 I used Microsoft Visual Studio Express 2013 to compile (project files included).
 
-The wrapper is made to wrap as closely as possible the functions provided by NI-SCOPE C interface. The project is made of a C-to-C++ stage followed by a C++-to-Python stage (I find it more readable this way).
+The wrapper is made to wrap as closely as possible the functions provided by the NI-SCOPE C interface. The project is made of a C-to-C++ stage followed by a C++-to-Python stage (I find it more readable in this way).
 
 Architecture
 ============
 
-Here is a brief list of the functions and other things provided by pyniscope. An extended description can be found in the NI-SCOPE help files, under *Programming / Reference / NI-SCOPE Function Reference Help*.
+Here is a brief list of the functions and other things provided by pyniscope. An extended description can be found in the [NI-SCOPE help files](http://zone.ni.com/reference/en-XX/help/370592W-01/), under *Programming / Reference / NI-SCOPE Function Reference Help*.
+The *enum* structures give a convenient way to access the attributes with the Set/Get/Check attribute functions. Data types and descriptions are found in the NI-SCOPE help files.
 
 **pyniscope**
 * bool Initialize(str resourceName, bool IDQuery, bool resetDevice)
@@ -28,7 +29,7 @@ Here is a brief list of the functions and other things provided by pyniscope. An
 * bool ConfigureChanCharacteristics(str channelList, float inputImpedance, float maxInputFrequency)
 * bool ConfigureVertical(str channelList, float range, float offset, int coupling, float probeAttenuation, bool enabled)
 
-* Configuration - Actual values*
+*Configuration - Actual values*
 * int ActualMeasWfmSize(int arrayMeasFunction)
 * int ActualNumWfms(str channelList)
 * int ActualRecordLength()

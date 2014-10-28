@@ -13,6 +13,7 @@ Architecture
 
 Here is a brief list of the functions and other things provided by pyniscope. An extended description can be found in the [NI-SCOPE help files](http://zone.ni.com/reference/en-XX/help/370592W-01/), under *Programming / Reference / NI-SCOPE Function Reference Help*.
 The *enum* structures give a convenient way to access the attributes with the Set/Get/Check attribute functions. Data types and descriptions are found in the NI-SCOPE help files.
+The functions that are not supposed to return any value will return True if they succeeded, and False otherwise.
 
 **pyniscope**
 * bool Initialize(str resourceName, bool IDQuery, bool resetDevice)
@@ -381,9 +382,12 @@ Usage example
 	# starts digitizing
 	scope.InitiateAcquisition()
 	scope.SendSWTrigger()
+	
+	# waits for digitizing to complete
 	while scope.AcquisitionStatus()==0:
 		pass
 	
+	# fetches data: gives a list with length = number of channels and sublists with length = numPoints
 	data = scope.Fetch(channels, timeout, numPoints)[1]
 	
 	# reads actual sample rate and builds time vector

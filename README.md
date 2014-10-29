@@ -381,7 +381,6 @@ Usage example
 	
 	# starts digitizing
 	scope.InitiateAcquisition()
-	scope.SendSWTrigger()
 	
 	# waits for digitizing to complete
 	while scope.AcquisitionStatus()==0:

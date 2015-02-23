@@ -270,6 +270,9 @@ list pyniscope::GetFrequencyResponse(std::string channelName){
 			retval.append(lPhases);
 			retval.append(numberOfFrequencies);
 		}
+		delete [] frequencies;
+		delete [] amplitudes;
+		delete [] phases;
 	}
 	return retval;
 }
@@ -283,7 +286,10 @@ bool pyniscope::ConfigureEqualizationFilterCoefficients(std::string channel, lis
 	for (int i = 0; i < numberOfCoefficients; i++) {
 		data[i] = (ViReal64)extract<double>(coefficients[i]);
 	}
-	return scope.ConfigureEqualizationFilterCoefficients(ToChar(channel), numberOfCoefficients, data);
+	bool retval;
+	retval = scope.ConfigureEqualizationFilterCoefficients(ToChar(channel), numberOfCoefficients, data);
+	delete [] data;
+	return retval;
 }
 
 
@@ -365,6 +371,7 @@ std::string pyniscope::GetAttributeViString(std::string channelList, int attribu
 	if (bufSize > 0) {
 		ViChar* value = new ViChar[bufSize];
 		if (scope.GetAttributeViString(ToChar(channelList), (ViAttr)attributeID, bufSize, value)) return (std::string)value;
+		delete [] value;
 	}
 	return "";
 }
@@ -471,6 +478,8 @@ list pyniscope::Fetch(std::string channelList, double timeout, int numSamples){
 				retval.append(wfi);
 			}
 		}
+		delete [] wfm;
+		delete [] wfmInfo;
 	}
 	return retval;
 }
@@ -497,6 +506,8 @@ list pyniscope::FetchComplex(std::string channelList, double timeout, int numSam
 				retval.append(wfr);
 			}
 		}
+		delete [] wfmInfo;
+		delete [] wfm;
 	}
 	return retval;
 }
@@ -523,6 +534,8 @@ list pyniscope::FetchComplexBinary16(std::string channelList, double timeout, in
 				retval.append(wfr);
 			}
 		}
+		delete [] wfmInfo;
+		delete [] wfm;
 	}
 	return retval;
 }
@@ -546,6 +559,8 @@ list pyniscope::FetchBinary8(std::string channelList, double timeout, int numSam
 				retval.append(wfi);
 			}
 		}
+		delete [] wfmInfo;
+		delete [] wfm;
 	}
 	return retval;
 }
@@ -569,6 +584,8 @@ list pyniscope::FetchBinary16(std::string channelList, double timeout, int numSa
 				retval.append(wfi);
 			}
 		}
+		delete [] wfmInfo;
+		delete [] wfm;
 	}
 	return retval;
 }
@@ -592,6 +609,8 @@ list pyniscope::FetchBinary32(std::string channelList, double timeout, int numSa
 				retval.append(wfi);
 			}
 		}
+		delete [] wfmInfo;
+		delete [] wfm;
 	}
 	return retval;
 }
@@ -614,6 +633,7 @@ list pyniscope::GetNormalizationCoefficients(std::string channelList){
 				retval.append(cf);
 			}
 		}
+		delete [] coefficientInfo;
 	}
 	return retval;
 }
@@ -637,6 +657,7 @@ list pyniscope::GetScalingCoefficients(std::string channelList){
 				retval.append(cf);
 			}
 		}
+		delete [] coefficientInfo;
 	}
 	return retval;
 }
@@ -667,6 +688,8 @@ list pyniscope::Read(std::string channelList, double timeout, int numSamples){
 				retval.append(wfi);
 			}
 		}
+		delete [] wfmInfo;
+		delete [] wfm;
 	}
 	return retval;
 }
@@ -712,6 +735,8 @@ list pyniscope::FetchArrayMeasurement(std::string channelList, double timeout, i
 				retval.append(wfi);
 			}
 		}
+		delete [] wfmInfo;
+		delete [] wfm;
 	}
 	return retval;
 }
@@ -734,6 +759,7 @@ list pyniscope::FetchMeasurement(std::string channelList, double timeout, int sc
 				retval.append(wfi);
 			}
 		}
+		delete [] wfm;
 	}
 	return retval;
 }
@@ -765,6 +791,7 @@ list pyniscope::ReadMeasurement(std::string channelList, double timeout, int sca
 				retval.append(wfi);
 			}
 		}
+		delete [] wfm;
 	}
 	return retval;
 }
@@ -839,6 +866,8 @@ list pyniscope::RevisionQuery(){
 		retval.append((std::string)driverRev);
 		retval.append((std::string)instrRev);
 	}
+	delete [] driverRev;
+	delete [] instrRev;
 	return retval;
 }
 
@@ -853,6 +882,7 @@ list pyniscope::SelfTest(){
 		retval.append((int)selfTestResult);
 		retval.append((std::string)selfTestMessage);
 	}
+	delete [] selfTestMessage;
 	return retval;
 }
 
@@ -876,6 +906,8 @@ list pyniscope::ErrorHandler(int errorCode){
 		retval.append(errorSource);
 		retval.append(errorDescription);
 	}
+	delete [] errorSource;
+	delete [] errorDescription;
 	return retval;
 }
 
@@ -888,6 +920,7 @@ std::string pyniscope::GetError(int errorCode){
 	if (bufferSize>0) {
 		ViChar* description = new ViChar[bufferSize]; 
 		if (scope.GetError((ViStatus*)errorCode, bufferSize, description)) return (std::string)description;
+		delete [] description;
 	}
 	return "";
 }
@@ -901,6 +934,7 @@ std::string pyniscope::GetErrorMessage(int errorCode){
 	if (bufferSize>0) {
 		ViChar* description = new ViChar[bufferSize]; 
 		if (scope.GetErrorMessage((ViStatus)errorCode, bufferSize, description)) return (std::string)description;
+		delete [] description;
 	}
 	return "";
 }
@@ -1011,6 +1045,7 @@ list pyniscope::ErrorQuery(){
 		retval.append((int)errCode);
 		retval.append((std::string)errMessage);
 	}
+	delete [] errMessage;
 	return retval;
 }
 

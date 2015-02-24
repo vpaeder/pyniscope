@@ -377,6 +377,9 @@ typedef enum {
 } niScope_IviAttribute;
 
 // values enumerators
+class niScope_TriggerSource {
+};
+
 typedef enum {
 	Edge = NISCOPE_VAL_EDGE_TRIGGER,
 	Hysteresis = NISCOPE_VAL_HYSTERESIS_TRIGGER,
@@ -386,9 +389,6 @@ typedef enum {
 	TV = NISCOPE_VAL_TV_TRIGGER,
 	Immediate = NISCOPE_VAL_IMMEDIATE_TRIGGER
 } niScope_TriggerType;
-
-class niScope_TriggerSource {
-};
 
 typedef enum {
 	ReadPointer = NISCOPE_VAL_READ_POINTER,
@@ -449,7 +449,272 @@ typedef enum {
 	TriggerAdvance = NISCOPE_VAL_SOFTWARE_TRIGGER_ADVANCE
 } niScope_SoftwareTriggerTypes;
 
+typedef enum {
+	NTSC = NISCOPE_VAL_NTSC,
+	PAL = NISCOPE_VAL_PAL,
+	SECAM = NISCOPE_VAL_SECAM,
+	MPAL = NISCOPE_VAL_M_PAL,
+	SDTV480i_59_94FPS = NISCOPE_VAL_480I_59_94_FIELDS_PER_SECOND,
+	SDTV480i_60FPS = NISCOPE_VAL_480I_60_FIELDS_PER_SECOND,
+	SDTV480p_59_94FPS = NISCOPE_VAL_480P_59_94_FRAMES_PER_SECOND,
+	SDTV480p_60FPS = NISCOPE_VAL_480P_60_FRAMES_PER_SECOND,
+	SDTV576i_50FPS = NISCOPE_VAL_576I_50_FIELDS_PER_SECOND,
+	SDTV576p_50FPS = NISCOPE_VAL_576P_50_FRAMES_PER_SECOND,
+	HDTV720p_50FPS = NISCOPE_VAL_720P_50_FRAMES_PER_SECOND,
+	HDTV720p_59_94FPS = NISCOPE_VAL_720P_59_94_FRAMES_PER_SECOND,
+	HDTV720p_60FPS = NISCOPE_VAL_720P_60_FRAMES_PER_SECOND,
+	HDTV1080i_50FPS = NISCOPE_VAL_1080I_50_FIELDS_PER_SECOND,
+	HDTV1080i_59_94FPS = NISCOPE_VAL_1080I_59_94_FIELDS_PER_SECOND,
+	HDTV1080i_60FPS = NISCOPE_VAL_1080I_60_FIELDS_PER_SECOND,
+	HDTV1080p_24FPS = NISCOPE_VAL_1080P_24_FRAMES_PER_SECOND
+} niScope_AttrTVTriggerSignalFormatValues;
 
+class niScope_AttrClockSource {
+};
+
+/* from this point, enum must be transposed to python */
+typedef enum {
+	TVPositive = NISCOPE_VAL_TV_POSITIVE,
+	TVNegative = NISCOPE_VAL_TV_NEGATIVE
+} niScope_AttrTVTriggerPolarityValues;
+
+typedef enum {
+	Field1 = NISCOPE_VAL_TV_EVENT_FIELD1,
+	Field2 = NISCOPE_VAL_TV_EVENT_FIELD2,
+	AnyField = NISCOPE_VAL_TV_EVENT_ANY_FIELD,
+	AnyLine = NISCOPE_VAL_TV_EVENT_ANY_LINE,
+	LineNumber = NISCOPE_VAL_TV_EVENT_LINE_NUMBER
+} niScope_AttrTVTriggerEventValues;
+
+typedef enum {
+	RealTime = NISCOPE_VAL_REAL_TIME,
+	EquivalentTime = NISCOPE_VAL_EQUIVALENT_TIME
+} niScope_AttrSampleModeValues;
+
+typedef enum {
+	RefTrigger = NISCOPE_VAL_REF_TRIGGER,
+	StartTrigger = NISCOPE_VAL_START_TRIGGER,
+	EndOfAcquisitionEvent = NISCOPE_VAL_END_OF_ACQUISITION_EVENT,
+	EndOfRecordEvent = NISCOPE_VAL_END_OF_RECORD_EVENT,
+	AdvanceTrigger = NISCOPE_VAL_ADVANCE_TRIGGER,
+	ReadyForAdvanceEvent = NISCOPE_VAL_READY_FOR_ADVANCE_EVENT,
+	ReadyForStartEvent = NISCOPE_VAL_READY_FOR_START_EVENT,
+	ReadyForRefEvent = NISCOPE_VAL_READY_FOR_REF_EVENT,
+	FiveVOut = NISCOPE_VAL_5V_OUT,
+	RefClock = NISCOPE_VAL_REF_CLOCK,
+	SampleClock = NISCOPE_VAL_SAMPLE_CLOCK
+} niScope_AttrExportSignalValues;
+
+typedef enum {
+	EnteringWindow = NISCOPE_VAL_ENTERING_WINDOW,
+	LeavingWindow = NISCOPE_VAL_LEAVING_WINDOW
+} niScope_AttrTriggerWindowModeValues;
+
+typedef enum {
+	Input = NISCOPE_VAL_INPUT,
+	Output = NISCOPE_VAL_OUTPUT,
+	None = NISCOPE_VAL_NONE,
+	True = NISCOPE_VAL_TRUE,
+	False = NISCOPE_VAL_FALSE
+} niScope_AttrGeneralDefinedValues;
+
+typedef enum {
+	SelfCalibration = NISCOPE_VAL_SELF_CALIBRATION,
+	ExternalCalibration = NISCOPE_VAL_EXTERNAL_CALIBRATION,
+	RestoreFactoryCalibration = NISCOPE_VAL_RESTORE_FACTORY_CALIBRATION,
+	ClearEEPROM = NISCOPE_VAL_CLEAR_EEPROM
+} niScope_AttrCalibrationOperationValues;
+
+typedef enum {
+	MaxTimeInfinite = NISCOPE_VAL_MAX_TIME_INFINITE,
+	MaxTimeImmediate = NISCOPE_VAL_MAX_TIME_IMMEDIATE
+} niScope_AttrMaxTimeValues;
+
+typedef enum {
+	Complete = NISCOPE_VAL_ACQ_COMPLETE,
+	InProgress = NISCOPE_VAL_ACQ_IN_PROGRESS,
+	Unknown = NISCOPE_VAL_ACQ_STATUS_UNKNOWN
+} niScope_AttrAcquisitionStatusValues;
+
+typedef enum {
+	LowPass = NISCOPE_VAL_MEAS_LOWPASS,
+	HighPass = NISCOPE_VAL_MEAS_HIGHPASS,
+	BandPass = NISCOPE_VAL_MEAS_BANDPASS,
+	BandStop = NISCOPE_VAL_MEAS_BANDSTOP
+} niScope_AttrMeasFilterTypeValues;
+
+typedef enum {
+	LowHigh = NISCOPE_VAL_MEAS_LOW_HIGH,
+	MinMax = NISCOPE_VAL_MEAS_MIN_MAX,
+	BaseTop = NISCOPE_VAL_MEAS_BASE_TOP
+	
+} niScope_AttrMeasPercentageMethodValues;
+
+typedef enum {
+	Voltage = NISCOPE_VAL_MEAS_VOLTAGE,
+	Percentage = NISCOPE_VAL_MEAS_PERCENTAGE
+} niScope_AttrMeasRefLevelUnitsValues;
+
+typedef enum {
+	AllMeasurements = NISCOPE_VAL_ALL_MEASUREMENTS,
+	RiseTime = NISCOPE_VAL_RISE_TIME,
+	FallTime = NISCOPE_VAL_FALL_TIME,
+	Frequency = NISCOPE_VAL_FREQUENCY,
+	Period = NISCOPE_VAL_PERIOD,
+	VoltageRMS = NISCOPE_VAL_VOLTAGE_RMS,
+	VoltagePeakToPeak = NISCOPE_VAL_VOLTAGE_PEAK_TO_PEAK,
+	VoltageMax = NISCOPE_VAL_VOLTAGE_MAX,
+	VoltageMin = NISCOPE_VAL_VOLTAGE_MIN,
+	VoltageHigh = NISCOPE_VAL_VOLTAGE_HIGH,
+	VoltageLow = NISCOPE_VAL_VOLTAGE_LOW,
+	VoltageAverage = NISCOPE_VAL_VOLTAGE_AVERAGE,
+	WidthNeg = NISCOPE_VAL_WIDTH_NEG,
+	WidthPos = NISCOPE_VAL_WIDTH_POS,
+	DutyCycleNeg = NISCOPE_VAL_DUTY_CYCLE_NEG,
+	DutyCyclePos = NISCOPE_VAL_DUTY_CYCLE_POS,
+	Amplitude = NISCOPE_VAL_AMPLITUDE,
+	VoltageCycleRMS = NISCOPE_VAL_VOLTAGE_CYCLE_RMS,
+	VoltageCycleAverage = NISCOPE_VAL_VOLTAGE_CYCLE_AVERAGE,
+	Overshoot = NISCOPE_VAL_OVERSHOOT,
+	Preshoot = NISCOPE_VAL_PRESHOOT,
+	LowRefVolts = NISCOPE_VAL_LOW_REF_VOLTS,
+	MidRefVolts = NISCOPE_VAL_MID_REF_VOLTS,
+	HighRefVolts = NISCOPE_VAL_HIGH_REF_VOLTS,
+	Area = NISCOPE_VAL_AREA,
+	CycleArea = NISCOPE_VAL_CYCLE_AREA,
+	Integral = NISCOPE_VAL_INTEGRAL,
+	VoltageBase = NISCOPE_VAL_VOLTAGE_BASE,
+	VoltageTop = NISCOPE_VAL_VOLTAGE_TOP,
+	FFTFrequency = NISCOPE_VAL_FFT_FREQUENCY,
+	FFTAmplitude = NISCOPE_VAL_FFT_AMPLITUDE,
+	RiseSlewRate = NISCOPE_VAL_RISE_SLEW_RATE,
+	FallSlewRate = NISCOPE_VAL_FALL_SLEW_RATE,
+	ACEstimate = NISCOPE_VAL_AC_ESTIMATE,
+	DCEstimate = NISCOPE_VAL_DC_ESTIMATE,
+	TimeDelay = NISCOPE_VAL_TIME_DELAY,
+	AveragePeriod = NISCOPE_VAL_AVERAGE_PERIOD,
+	AverageFrequency = NISCOPE_VAL_AVERAGE_FREQUENCY,
+	VoltageBaseToTop = NISCOPE_VAL_VOLTAGE_BASE_TO_TOP,
+	PhaseDelay = NISCOPE_VAL_PHASE_DELAY
+} niScope_AttrWaveformMeasurementFunctionValues;
+
+typedef enum {
+	VMean = NISCOPE_VAL_VOLTAGE_HISTOGRAM_MEAN,
+	VStDev = NISCOPE_VAL_VOLTAGE_HISTOGRAM_STDEV,
+	VPeakToPeak = NISCOPE_VAL_VOLTAGE_HISTOGRAM_PEAK_TO_PEAK,
+	VMedian = NISCOPE_VAL_VOLTAGE_HISTOGRAM_MEDIAN,
+	VHits = NISCOPE_VAL_VOLTAGE_HISTOGRAM_HITS,
+	VMax = NISCOPE_VAL_VOLTAGE_HISTOGRAM_MAX,
+	VMin = NISCOPE_VAL_VOLTAGE_HISTOGRAM_MIN,
+	VMeanPlusStDev = NISCOPE_VAL_VOLTAGE_HISTOGRAM_MEAN_PLUS_STDEV,
+	VMeanPlus2StDev = NISCOPE_VAL_VOLTAGE_HISTOGRAM_MEAN_PLUS_2_STDEV,
+	VMeanPlus3StDev = NISCOPE_VAL_VOLTAGE_HISTOGRAM_MEAN_PLUS_3_STDEV,
+	VMode = NISCOPE_VAL_VOLTAGE_HISTOGRAM_MODE,
+	VNewHits = NISCOPE_VAL_VOLTAGE_HISTOGRAM_NEW_HITS
+} niScope_AttrVoltageHistogramValues;
+
+typedef enum {
+	TMean = NISCOPE_VAL_TIME_HISTOGRAM_MEAN,
+	TStDev = NISCOPE_VAL_TIME_HISTOGRAM_STDEV,
+	TPeakToPeak = NISCOPE_VAL_TIME_HISTOGRAM_PEAK_TO_PEAK,
+	TMedian = NISCOPE_VAL_TIME_HISTOGRAM_MEDIAN,
+	THits = NISCOPE_VAL_TIME_HISTOGRAM_HITS,
+	TMax = NISCOPE_VAL_TIME_HISTOGRAM_MAX,
+	TMin = NISCOPE_VAL_TIME_HISTOGRAM_MIN,
+	TMeanPlusStDev = NISCOPE_VAL_TIME_HISTOGRAM_MEAN_PLUS_STDEV,
+	TMeanPlus2StDev = NISCOPE_VAL_TIME_HISTOGRAM_MEAN_PLUS_2_STDEV,
+	TMeanPlus3StDev = NISCOPE_VAL_TIME_HISTOGRAM_MEAN_PLUS_3_STDEV,
+	TMode = NISCOPE_VAL_TIME_HISTOGRAM_MODE,
+	TNewHits = NISCOPE_VAL_TIME_HISTOGRAM_NEW_HITS
+} niScope_AttrTimeHistogramValues;
+
+typedef enum {
+	NoMeasurement = NISCOPE_VAL_NO_MEASUREMENT,
+	LastAcqHistogram = NISCOPE_VAL_LAST_ACQ_HISTOGRAM,
+	PhaseSpectrum = NISCOPE_VAL_FFT_PHASE_SPECTRUM,
+	FFTAmpSpectrumVoltsRMS = NISCOPE_VAL_FFT_AMP_SPECTRUM_VOLTS_RMS ,
+	MultiAcqVoltageHistogram = NISCOPE_VAL_MULTI_ACQ_VOLTAGE_HISTOGRAM,
+	MultiAcqTimeHistogram = NISCOPE_VAL_MULTI_ACQ_TIME_HISTOGRAM,
+	ArrayIntegral = NISCOPE_VAL_ARRAY_INTEGRAL,
+	Derivative = NISCOPE_VAL_DERIVATIVE,
+	Inverse = NISCOPE_VAL_INVERSE,
+	HanningWindow = NISCOPE_VAL_HANNING_WINDOW,
+	FlatTopWindow = NISCOPE_VAL_FLAT_TOP_WINDOW,
+	PolynomialInterpolation = NISCOPE_VAL_POLYNOMIAL_INTERPOLATION,
+	MultiplyChannels = NISCOPE_VAL_MULTIPLY_CHANNELS,
+	AddChannels = NISCOPE_VAL_ADD_CHANNELS,
+	SubtractChannels = NISCOPE_VAL_SUBTRACT_CHANNELS,
+	DivideChannels = NISCOPE_VAL_DIVIDE_CHANNELS,
+	MultiAcqAverage = NISCOPE_VAL_MULTI_ACQ_AVERAGE,
+	ButterworthFilter = NISCOPE_VAL_BUTTERWORTH_FILTER,
+	ChebyshevFilter = NISCOPE_VAL_CHEBYSHEV_FILTER ,
+	FFTAmpSpectrumDB = NISCOPE_VAL_FFT_AMP_SPECTRUM_DB,
+	HammingWindow = NISCOPE_VAL_HAMMING_WINDOW,
+	WindowedFIRFilter = NISCOPE_VAL_WINDOWED_FIR_FILTER,
+	BesselFilter = NISCOPE_VAL_BESSEL_FILTER,
+	TriangleWindow = NISCOPE_VAL_TRIANGLE_WINDOW,
+	BlackmanWindow = NISCOPE_VAL_BLACKMAN_WINDOW,
+	ArrayOffset = NISCOPE_VAL_ARRAY_OFFSET,
+	ArrayGain = NISCOPE_VAL_ARRAY_GAIN
+} niScope_AttrArrayMeasurementsValues;
+
+typedef enum {
+	Even = NISCOPE_VAL_EVEN,
+	Odd = NISCOPE_VAL_ODD
+} niScope_AttrSymmetryTypeValues;
+
+typedef enum {
+	Symmetric = NISCOPE_VAL_SYMMETRIC,
+	Asymmetric = NISCOPE_VAL_SYMMETRIC
+} niScope_AttrSymmetryValues;
+
+typedef enum {
+	Phase = NISCOPE_VAL_PHASE,
+	Magnitude = NISCOPE_VAL_MAGNITUDE,
+	Resampler = NISCOPE_VAL_RESAMPLER
+} niScope_AttrDDCDiscriminatorFIRInputSourceValues;
+
+typedef enum {
+	PFIR = NISCOPE_VAL_PFIR_COEFFICIENTS,
+	DiscriminatorFIR = NISCOPE_VAL_DISCRIMINATOR_FIR_COEFFICIENTS
+} niScope_AttrDDCFilterCoefficientTypeValues;
+
+typedef enum {
+	IData = NISCOPE_VAL_I_DATA,
+	MagnitudeData = NISCOPE_VAL_MAGNITUDE_DATA,
+	FreqData = NISCOPE_VAL_FREQ_DATA,
+	QData = NISCOPE_VAL_Q_DATA,
+	PhaseData = NISCOPE_VAL_PHASE_DATA
+} niScope_AttrDDCOutputSourceValues;
+
+typedef enum {
+	Real = NISCOPE_VAL_REAL,
+	Complex = NISCOPE_VAL_COMPLEX
+} niScope_AttrDDCDataTypeValues;
+
+typedef enum {
+	SingleEnded = NISCOPE_VAL_SINGLE_ENDED,
+	UnbalancedDifferential = NISCOPE_VAL_UNBALANCED_DIFFERENTIAL,
+	Differential = NISCOPE_VAL_DIFFERENTIAL
+} niScope_AttrChannelTerminalConfigurationValues;
+
+typedef enum {
+	Standard48Tap = NISCOPE_VAL_48_TAP_STANDARD,
+	Hanning48Tap = NISCOPE_VAL_48_TAP_HANNING,
+	Hanning16Tap = NISCOPE_VAL_16_TAP_HANNING,
+	Hanning8Tap = NISCOPE_VAL_8_TAP_HANNING
+} niScope_AttrFlexFIRAntialiasFilterTypeValues;
+
+typedef enum {
+	Error = NISCOPE_VAL_ERROR_REPORTING_ERROR,
+	Warning = NISCOPE_VAL_ERROR_REPORTING_WARNING,
+	Disabled = NISCOPE_VAL_ERROR_REPORTING_DISABLED	
+} niScope_AttrOverflowErrorReportingValues;
+
+typedef enum {
+	AnalogDetectionCircuit = NISCOPE_VAL_ANALOG_DETECTION_CIRCUIT,
+	DDCOutput = NISCOPE_VAL_DDC_OUTPUT
+} niScope_AttrRefTriggerDetectorLocationValues;
 
 BOOST_PYTHON_MODULE(pyniscope) {
 	class_<pyniscope>("pyniscope", init<>())
@@ -787,5 +1052,93 @@ BOOST_PYTHON_MODULE(pyniscope) {
 	classTriggerSource.attr("PFI1") = NISCOPE_VAL_PFI_1;
 	classTriggerSource.attr("PFI2") = NISCOPE_VAL_PFI_2;
 	
+	enum_<niScope_TriggerType>("TriggerType")
+		.value("Edge", Edge)
+		.value("Hysteresis", Hysteresis)
+		.value("Digital", Digital)
+		.value("Window", Window)
+		.value("Software", Software)
+		.value("TV", TV)
+		.value("Immediate", Immediate);
 	
-	}
+	enum_<niScope_AttrRelativeToValues>("AttrRelativeToValues")
+		.value("ReadPointer", ReadPointer)
+		.value("Pretrigger", Pretrigger)
+		.value("Now", Now)
+		.value("Start", Start)
+		.value("Trigger", Trigger);
+	
+	enum_<niScope_AttrTriggerModifierValues>("AttrTriggerModifierValues")
+		.value("NoTriggerMod", NoTriggerMod)
+		.value("Auto", Auto)
+		.value("AutoLevel", AutoLevel);
+
+	enum_<niScope_AttrTriggerCouplingValues>("AttrTriggerCouplingValues")
+		.value("AC", AC)
+		.value("DC", DC)
+		.value("HFReject", HFReject)
+		.value("LFReject", LFReject)
+		.value("ACPlusHFReject", ACPlusHFReject);
+	
+	enum_<niScope_AttrTriggerSlopeValues>("AttrTriggerSlopeValues")
+		.value("Positive", Positive)
+		.value("Negative", Negative);
+	
+	enum_<niScope_AttrAcquisitionTypeValues>("AttrAcquisitionTypeValues")
+		.value("Normal", Normal)
+		.value("Flexres", Flexres)
+		.value("DDC", DDC);
+	
+	enum_<niScope_AttrInterpolationValues>("AttrInterpolationValues")
+		.value("NoInterpolation", NoInterpolation)
+		.value("SineX", SineX)
+		.value("Linear", Linear);
+	
+	enum_<niScope_TriggerOutputEvent>("TriggerOutputEvent")
+		.value("NoEvent", NoEvent)
+		.value("StopTriggerEvent", StopTriggerEvent)
+		.value("StartTriggerEvent", StartTriggerEvent);
+	
+	enum_<niScope_RISMethods>("RISMethods")
+		.value("ExactNumAverages", ExactNumAverages)
+		.value("MinNumAverages", MinNumAverages)
+		.value("Incomplete", Incomplete)
+		.value("LimitedBinWidth", LimitedBinWidth);
+	
+	enum_<niScope_SoftwareTriggerTypes>("SoftwareTriggerTypes")
+		.value("TriggerStart", TriggerStart)
+		.value("TriggerArmReference", TriggerArmReference)
+		.value("TriggerReference", TriggerReference)
+		.value("TriggerAdvance", TriggerAdvance);
+
+	enum_<niScope_AttrTVTriggerSignalFormatValues>("AttrTVTriggerSignalFormatValues")
+		.value("NTSC", NTSC)
+		.value("PAL", PAL)
+		.value("SECAM", SECAM)
+		.value("MPAL", MPAL)
+		.value("SDTV480i_59_94FPS", SDTV480i_59_94FPS)
+		.value("SDTV480i_60FPS", SDTV480i_60FPS)
+		.value("SDTV480p_59_94FPS", SDTV480p_59_94FPS)
+		.value("SDTV480p_60FPS", SDTV480p_60FPS)
+		.value("SDTV576i_50FPS", SDTV576i_50FPS)
+		.value("SDTV576p_50FPS", SDTV576p_50FPS)
+		.value("HDTV720p_50FPS", HDTV720p_50FPS)
+		.value("HDTV720p_59_94FPS", HDTV720p_59_94FPS)
+		.value("HDTV720p_60FPS", HDTV720p_60FPS)
+		.value("HDTV1080i_50FPS", HDTV1080i_50FPS)
+		.value("HDTV1080i_59_94FPS", HDTV1080i_59_94FPS)
+		.value("HDTV1080i_60FPS", HDTV1080i_60FPS)
+		.value("HDTV1080p_24FPS", HDTV1080p_24FPS);
+
+	object classClockSource = class_<niScope_AttrClockSource>("ClockSource", init<>());
+	classClockSource.attr("NoSource") = NISCOPE_VAL_NO_SOURCE;
+	classClockSource.attr("RTSIClock") = NISCOPE_VAL_RTSI_CLOCK;
+	classClockSource.attr("External") = NISCOPE_VAL_EXTERNAL;
+	classClockSource.attr("PFI0") = NISCOPE_VAL_PFI_0;
+	classClockSource.attr("PFI1") = NISCOPE_VAL_PFI_1;
+	classClockSource.attr("PFI2") = NISCOPE_VAL_PFI_2;
+	classClockSource.attr("PXIClock") = NISCOPE_VAL_PXI_CLOCK;
+	classClockSource.attr("ClkIn") = NISCOPE_VAL_CLK_IN;
+	classClockSource.attr("ClkOut") = NISCOPE_VAL_CLK_OUT;
+	classClockSource.attr("Internal10MHzOsc") = NISCOPE_VAL_INTERNAL10MHZ_OSC;
+}

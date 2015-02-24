@@ -473,7 +473,7 @@ list pyniscope::Fetch(std::string channelList, double timeout, int numSamples){
 				list wfi;
 				retval.append(WfmInfoExtract(wfmInfo[i]));
 				for (int j = 0; j < numSamples; j++) {
-					wfi.append(wfm[i*numSamples + j]);
+					wfi.append((double)wfm[i*numSamples + j]);
 				}
 				retval.append(wfi);
 			}
@@ -499,8 +499,8 @@ list pyniscope::FetchComplex(std::string channelList, double timeout, int numSam
 				list wfi;
 				retval.append(WfmInfoExtract(wfmInfo[i]));
 				for (int j = 0; j < numSamples; j++) {
-					wfr.append(wfm[i*numSamples + j].real);
-					wfi.append(wfm[i*numSamples + j].imaginary);
+					wfr.append((double)wfm[i*numSamples + j].real);
+					wfi.append((double)wfm[i*numSamples + j].imaginary);
 				}
 				retval.append(wfi);
 				retval.append(wfr);
@@ -527,8 +527,8 @@ list pyniscope::FetchComplexBinary16(std::string channelList, double timeout, in
 				list wfi;
 				retval.append(WfmInfoExtract(wfmInfo[i]));
 				for (int j = 0; j < numSamples; j++) {
-					wfr.append(wfm[i*numSamples + j].real);
-					wfi.append(wfm[i*numSamples + j].imaginary);
+					wfr.append((int)wfm[i*numSamples + j].real);
+					wfi.append((int)wfm[i*numSamples + j].imaginary);
 				}
 				retval.append(wfi);
 				retval.append(wfr);
@@ -554,7 +554,7 @@ list pyniscope::FetchBinary8(std::string channelList, double timeout, int numSam
 				list wfi;
 				retval.append(WfmInfoExtract(wfmInfo[i]));
 				for (int j = 0; j < numSamples; j++) {
-					wfi.append(wfm[i*numSamples + j]);
+					wfi.append((int)wfm[i*numSamples + j]);
 				}
 				retval.append(wfi);
 			}
@@ -579,7 +579,7 @@ list pyniscope::FetchBinary16(std::string channelList, double timeout, int numSa
 				list wfi;
 				retval.append(WfmInfoExtract(wfmInfo[i]));
 				for (int j = 0; j < numSamples; j++) {
-					wfi.append(wfm[i*numSamples + j]);
+					wfi.append((int)wfm[i*numSamples + j]);
 				}
 				retval.append(wfi);
 			}
@@ -604,7 +604,7 @@ list pyniscope::FetchBinary32(std::string channelList, double timeout, int numSa
 				list wfi;
 				retval.append(WfmInfoExtract(wfmInfo[i]));
 				for (int j = 0; j < numSamples; j++) {
-					wfi.append(wfm[i*numSamples + j]);
+					wfi.append((int)wfm[i*numSamples + j]);
 				}
 				retval.append(wfi);
 			}
@@ -683,7 +683,7 @@ list pyniscope::Read(std::string channelList, double timeout, int numSamples){
 				list wfi;
 				retval.append(WfmInfoExtract(wfmInfo[i]));
 				for (int j = 0; j < numSamples; j++) {
-					wfi.append(wfm[i*numSamples + j]);
+					wfi.append((double)wfm[i*numSamples + j]);
 				}
 				retval.append(wfi);
 			}
@@ -730,7 +730,7 @@ list pyniscope::FetchArrayMeasurement(std::string channelList, double timeout, i
 				list wfi;
 				retval.append(WfmInfoExtract(wfmInfo[i]));
 				for (int j = 0; j < measWfmSize; j++) {
-					wfi.append(wfm[i*measWfmSize + j]);
+					wfi.append((double)wfm[i*measWfmSize + j]);
 				}
 				retval.append(wfi);
 			}
@@ -754,7 +754,7 @@ list pyniscope::FetchMeasurement(std::string channelList, double timeout, int sc
 			for (int i = 0; i < numWfms; i++) {
 				list wfi;
 				for (int j = 0; j < measWfmSize; j++) {
-					wfi.append(wfm[i*measWfmSize + j]);
+					wfi.append((double)wfm[i*measWfmSize + j]);
 				}
 				retval.append(wfi);
 			}
@@ -768,8 +768,22 @@ list pyniscope::FetchMeasurementStats(std::string channelList, double timeout, i
 	/*
 	Obtains a waveform measurement and returns the measurement value. This function may return multiple statistical results depending on the number of channels, the acquisition type, and the number of records you specify.
 	*/
-	// TODO: implement
+	ViReal64 result;
+	ViReal64 mean;
+	ViReal64 stdev;
+	ViReal64 min;
+	ViReal64 max;
+	ViInt32 numInStats;
+	
 	list retval;
+	if (scope.FetchMeasurementStats(ToChar(channelList), (ViReal64)timeout, (ViInt32)scalarMeasFunction, &result, &mean, &stdev, &min, &max, &numInStats)) {
+		retval.append((double)result);
+		retval.append((double)mean);
+		retval.append((double)stdev);
+		retval.append((double)min);
+		retval.append((double)max);
+		retval.append((int)numInStats);
+	}
 	return retval;
 }
 
@@ -786,7 +800,7 @@ list pyniscope::ReadMeasurement(std::string channelList, double timeout, int sca
 			for (int i = 0; i < numWfms; i++) {
 				list wfi;
 				for (int j = 0; j < measWfmSize; j++) {
-					wfi.append(wfm[i*measWfmSize + j]);
+					wfi.append((double)wfm[i*measWfmSize + j]);
 				}
 				retval.append(wfi);
 			}
@@ -903,8 +917,8 @@ list pyniscope::ErrorHandler(int errorCode){
 	ViChar* errorSource = new ViChar[MAX_FUNCTION_NAME_SIZE];
 	ViChar* errorDescription = new ViChar[MAX_ERROR_DESCRIPTION];
 	if (scope.ErrorHandler(errorCode, errorSource, errorDescription)) {
-		retval.append(errorSource);
-		retval.append(errorDescription);
+		retval.append((std::string)errorSource);
+		retval.append((std::string)errorDescription);
 	}
 	delete [] errorSource;
 	delete [] errorDescription;
@@ -1053,25 +1067,47 @@ list pyniscope::FetchWaveform(std::string channel, int waveformSize){
 	/*
 	Returns the waveform from a previously initiated acquisition that the digitizer acquires for the channel you specify.
 	*/
-	// TODO: implement
+	ViReal64* waveform = new ViReal64[waveformSize];
+	ViInt32 actualPoints;
+	ViReal64 initialX;
+	ViReal64 xIncrement;
+	
 	list retval;
+	if (scope.FetchWaveform(ToChar(channel), (ViInt32)waveformSize, waveform, &actualPoints, &initialX, &xIncrement)) {
+		list wfm;
+		for (int i=0; i<(int)actualPoints; i++) {
+			wfm.append((double)waveform[i]);
+		}
+		retval.append(wfm);
+		retval.append((double)initialX);
+		retval.append((double)xIncrement);
+	}
+	delete [] waveform;
 	return retval;
 }
 
-list pyniscope::FetchWaveformMeasurement(std::string channel, int measFunction){
+double pyniscope::FetchWaveformMeasurement(std::string channel, int measFunction){
 	/*
 	Fetches a waveform measurement from a specific channel from a previously initiated waveform acquisition.
 	*/
-	// TODO: implement
-	list retval;
-	return retval;
+	ViReal64 measurement;
+	if (scope.FetchWaveformMeasurement(ToChar(channel), (ViInt32)measFunction, &measurement)) {
+		return (double)measurement;
+	}
+	return 0.0;
 }
 
 std::string pyniscope::GetChannelName(int index){
 	/*
 	Returns the channel string that is in the channel table at an index you specify. Not applicable to National Instruments digitizers.
     */
-	// TODO: implement
+	int bufferSize;
+	bufferSize = scope.GetChannelNameBufSize((ViInt32)index);
+	if (bufferSize>0) {
+		ViChar* value = new ViChar[bufferSize];
+		if (scope.GetChannelName((ViInt32)index, (ViInt32) bufferSize, value)) return (std::string) value;
+		delete [] value;
+	}
 	return "";
 }
 
@@ -1079,7 +1115,13 @@ std::string pyniscope::GetNextCoercionRecord(){
 	/*
 	Returns the coercion information associated with the IVI session.
 	*/
-	// TODO: implement
+	int bufferSize;
+	bufferSize = scope.GetNextCoercionRecordBufSize();
+	if (bufferSize>0) {
+		ViChar* value = new ViChar[bufferSize];
+		if (scope.GetNextCoercionRecord((ViInt32) bufferSize, value)) return (std::string) value;
+		delete [] value;
+	}
 	return "";
 }
 
@@ -1087,7 +1129,13 @@ std::string pyniscope::GetNextInterchangeWarning(){
 	/*
 	Returns the interchangeability warnings associated with the IVI session.
 	*/
-	// TODO: implement
+	int bufferSize;
+	bufferSize = scope.GetNextInterchangeWarningBufSize();
+	if (bufferSize>0) {
+		ViChar* value = new ViChar[bufferSize];
+		if (scope.GetNextInterchangeWarning((ViInt32) bufferSize, value)) return (std::string) value;
+		delete [] value;
+	}
 	return "";
 }
 
@@ -1104,18 +1152,35 @@ list pyniscope::ReadWaveform(std::string channel, int waveformSize, int maxtime)
 	/*
 	Initiates an acquisition on the channels that you enable with ConfigureVertical.
 	*/
-	// TODO: implement
 	list retval;
+	ViReal64* waveform = new ViReal64[waveformSize];
+	ViInt32 actualPoints;
+	ViReal64 initialX;
+	ViReal64 xIncrement;
+	
+	if (scope.ReadWaveform(ToChar(channel), (ViInt32) waveformSize, (ViInt32) maxtime, waveform, &actualPoints, &initialX, &xIncrement)) {
+		list wfm;
+		for (int i=0; i<(int)actualPoints; i++) {
+			wfm.append((double)waveform[i]);
+		}
+		retval.append(wfm);
+		retval.append((double)initialX);
+		retval.append((double)xIncrement);
+	}
+	delete [] waveform;
 	return retval;
 }
 
-list pyniscope::ReadWaveformMeasurement(std::string channel, int measFunction, int maxTime){
+double pyniscope::ReadWaveformMeasurement(std::string channel, int measFunction, int maxTime){
 	/*
 	Initiates a new waveform acquisition and returns a specified waveform measurement from a specific channel.
     */
-	// TODO: implement
 	list retval;
-	return retval;
+	ViReal64 measurement;
+	if (scope.ReadWaveformMeasurement(ToChar(channel), (ViInt32) measFunction, (ViInt32) maxTime, &measurement)) {
+		return (double)measurement;
+	}
+	return 0.0;
 }
 
 bool pyniscope::ResetInterchangeCheck(){

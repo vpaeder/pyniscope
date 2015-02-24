@@ -162,8 +162,11 @@ public:
 		bool FetchWaveform(ViConstString channel, ViInt32 waveformSize, ViReal64 waveform[], ViInt32* actualPoints, ViReal64* initialX, ViReal64* xIncrement);
 		bool FetchWaveformMeasurement(ViConstString channel, ViInt32 measFunction, ViReal64* measurement);
 		bool GetChannelName(ViInt32 index, ViInt32 bufferSize, ViChar channelString[]);
+		int GetChannelNameBufSize(ViInt32 index);
 		bool GetNextCoercionRecord(ViInt32 bufferSize, ViChar record[]);
+		int GetNextCoercionRecordBufSize();
 		bool GetNextInterchangeWarning(ViInt32 bufferSize, ViChar interchangeWarning[]);
+		int GetNextInterchangeWarningBufSize();
 		bool IsInvalidWfmElement(ViReal64 elementValue, ViBoolean* isInvalid);
 		bool ReadWaveform(ViConstString channel, ViInt32 waveformSize, ViInt32 maxtime, ViReal64 waveform[], ViInt32* actualPoints, ViReal64* initialX, ViReal64* xIncrement);
 		bool ReadWaveformMeasurement(ViConstString channel, ViInt32 measFunction, ViInt32 maxTime, ViReal64* measurement);

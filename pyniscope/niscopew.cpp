@@ -874,6 +874,14 @@ bool niscopew::GetChannelName(ViInt32 index, ViInt32 bufferSize, ViChar channelS
 	return false;
 }
 
+int niscopew::GetChannelNameBufSize(ViInt32 index){
+	/*
+	Returns the length of the buffer size for the channel string that is in the channel table at an index you specify. Not applicable to National Instruments digitizers.
+    */
+	if (sessionOpen) return (int)niScope_GetChannelName(session, index,  (ViInt32) 0, VI_NULL);
+	return 0;
+}
+
 bool niscopew::GetNextCoercionRecord(ViInt32 bufferSize, ViChar record[]){
 	/*
 	Returns the coercion information associated with the IVI session.
@@ -882,12 +890,28 @@ bool niscopew::GetNextCoercionRecord(ViInt32 bufferSize, ViChar record[]){
 	return false;
 }
 
+int niscopew::GetNextCoercionRecordBufSize(){
+	/*
+	Returns the buffer size for the coercion information associated with the IVI session.
+	*/
+	if (sessionOpen) return (int)niScope_GetNextCoercionRecord(session,(ViInt32) 0,VI_NULL);
+	return 0;
+}
+
 bool niscopew::GetNextInterchangeWarning(ViInt32 bufferSize, ViChar interchangeWarning[]){
 	/*
 	Returns the interchangeability warnings associated with the IVI session.
 	*/
 	if (sessionOpen) return HandleStatus(niScope_GetNextInterchangeWarning(session,bufferSize,interchangeWarning));
 	return false;
+}
+
+int niscopew::GetNextInterchangeWarningBufSize(){
+	/*
+	Returns the buffer size for the interchangeability warnings associated with the IVI session.
+	*/
+	if (sessionOpen) return niScope_GetNextInterchangeWarning(session,(ViInt32) 0, VI_NULL);
+	return 0;
 }
 
 bool niscopew::IsInvalidWfmElement(ViReal64 elementValue, ViBoolean* isInvalid){

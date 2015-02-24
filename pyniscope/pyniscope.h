@@ -147,13 +147,13 @@ public:
 	bool ConfigureTVTriggerSource(std::string source, int signalFormat, int evt, int polarity);
 	list ErrorQuery();
 	list FetchWaveform(std::string channel, int waveformSize);
-	list FetchWaveformMeasurement(std::string channel, int measFunction);
+	double FetchWaveformMeasurement(std::string channel, int measFunction);
 	std::string GetChannelName(int index);
 	std::string GetNextCoercionRecord();
 	std::string GetNextInterchangeWarning();
 	bool IsInvalidWfmElement(double elementValue);
 	list ReadWaveform(std::string channel, int waveformSize, int maxtime);
-	list ReadWaveformMeasurement(std::string channel, int measFunction, int maxTime);
+	double ReadWaveformMeasurement(std::string channel, int measFunction, int maxTime);
 	bool ResetInterchangeCheck();
 	bool SendSWTrigger();
 
@@ -373,6 +373,108 @@ typedef enum {
 	SpecificDriverVendor = NISCOPE_ATTR_SPECIFIC_DRIVER_VENDOR,
 	SupportedInstrumentModels = NISCOPE_ATTR_SUPPORTED_INSTRUMENT_MODELS
 } niScope_IviAttribute;
+
+// values enumerators
+typedef enum {
+	Edge = NISCOPE_VAL_EDGE_TRIGGER,
+	Hysteresis = NISCOPE_VAL_HYSTERESIS_TRIGGER,
+	Digital = NISCOPE_VAL_DIGITAL_TRIGGER,
+	Window = NISCOPE_VAL_WINDOW_TRIGGER,
+	Software = NISCOPE_VAL_SOFTWARE_TRIGGER,
+	TV = NISCOPE_VAL_TV_TRIGGER,
+	Immediate = NISCOPE_VAL_IMMEDIATE_TRIGGER
+} niScope_TriggerType;
+
+/* this doesn't work with non-integer enum values (here: char arrays)
+typedef enum {
+	Immediate = NISCOPE_VAL_IMMEDIATE,
+	External = NISCOPE_VAL_EXTERNAL,
+	SWTrig = NISCOPE_VAL_SW_TRIG_FUNC,
+	TTL0 = NISCOPE_VAL_TTL0,
+	TTL1 = NISCOPE_VAL_TTL1,
+	TTL2 = NISCOPE_VAL_TTL2,
+	TTL3 = NISCOPE_VAL_TTL3,
+	TTL4 = NISCOPE_VAL_TTL4,
+	TTL5 = NISCOPE_VAL_TTL5,
+	TTL6 = NISCOPE_VAL_TTL6,
+	TTL7 = NISCOPE_VAL_TTL7,
+	ECL0 = NISCOPE_VAL_ECL0,
+	ECL1 = NISCOPE_VAL_ECL1,
+	PXIStar = NISCOPE_VAL_PXI_STAR,
+	RTSI0 = NISCOPE_VAL_RTSI_0,
+	RTSI1 = NISCOPE_VAL_RTSI_1,
+	RTSI2 = NISCOPE_VAL_RTSI_2,
+	RTSI3 = NISCOPE_VAL_RTSI_3,
+	RTSI4 = NISCOPE_VAL_RTSI_4,
+	RTSI5 = NISCOPE_VAL_RTSI_5,
+	RTSI6 = NISCOPE_VAL_RTSI_6,
+	RTSI7 = NISCOPE_VAL_RTSI_7,
+	PFI0 = NISCOPE_VAL_PFI_0,
+	PFI1 = NISCOPE_VAL_PFI_1,
+	PFI2 = NISCOPE_VAL_PFI_2
+} niScope_TriggerSource;
+*/
+
+typedef enum {
+	ReadPointer = NISCOPE_VAL_READ_POINTER,
+	Pretrigger = NISCOPE_VAL_PRETRIGGER,
+	Now = NISCOPE_VAL_NOW,
+	Start = NISCOPE_VAL_START,
+	Trigger = NISCOPE_VAL_TRIGGER
+} niScope_AttrRelativeToValues;
+
+typedef enum {
+	NoTriggerMod = NISCOPE_VAL_NO_TRIGGER_MOD,
+	Auto = NISCOPE_VAL_AUTO,
+	AutoLevel = NISCOPE_VAL_AUTO_LEVEL
+} niScope_AttrTriggerModifierValues;
+
+typedef enum {
+	AC = NISCOPE_VAL_AC,
+	DC = NISCOPE_VAL_DC,
+	HFReject = NISCOPE_VAL_HF_REJECT,
+	LFReject = NISCOPE_VAL_LF_REJECT,
+	ACPlusHFReject = NISCOPE_VAL_AC_PLUS_HF_REJECT
+} niScope_AttrTriggerCouplingValues;
+
+typedef enum {
+	Positive = NISCOPE_VAL_POSITIVE,
+	Negative = NISCOPE_VAL_NEGATIVE
+} niScope_AttrTriggerSlopeValues;
+
+typedef enum {
+	Normal = NISCOPE_VAL_NORMAL,
+	Flexres = NISCOPE_VAL_FLEXRES,
+	DDC = NISCOPE_VAL_DDC
+} niScope_AttrAcquisitionTypeValues;
+
+typedef enum {
+	NoInterpolation = NISCOPE_VAL_NO_INTERPOLATION,
+	SineX = NISCOPE_VAL_SINE_X,
+	Linear = NISCOPE_VAL_LINEAR
+} niScope_AttrInterpolationValues;
+
+typedef enum {
+	NoEvent = NISCOPE_VAL_NO_EVENT,
+	StopTriggerEvent = NISCOPE_VAL_STOP_TRIGGER_EVENT,
+	StartTriggerEvent = NISCOPE_VAL_START_TRIGGER_EVENT
+} niScope_TriggerOutputEvent;
+
+typedef enum {
+	ExactNumAverages = NISCOPE_VAL_RIS_EXACT_NUM_AVERAGES,
+	MinNumAverages = NISCOPE_VAL_RIS_MIN_NUM_AVERAGES,
+	Incomplete = NISCOPE_VAL_RIS_INCOMPLETE,
+	LimitedBinWidth = NISCOPE_VAL_RIS_LIMITED_BIN_WIDTH
+} niScope_RISMethods;
+
+typedef enum {
+	TriggerStart = NISCOPE_VAL_SOFTWARE_TRIGGER_START,
+	TriggerArmReference = NISCOPE_VAL_SOFTWARE_TRIGGER_ARM_REFERENCE,
+	TriggerReference = NISCOPE_VAL_SOFTWARE_TRIGGER_REFERENCE,
+	TriggerAdvance = NISCOPE_VAL_SOFTWARE_TRIGGER_ADVANCE
+} niScope_SoftwareTriggerTypes;
+
+
 
 BOOST_PYTHON_MODULE(pyniscope) {
 	class_<pyniscope>("pyniscope", init<>())

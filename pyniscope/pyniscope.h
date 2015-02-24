@@ -28,8 +28,10 @@
 #include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/list.hpp>
+#include <boost/assign.hpp>
 using namespace boost::python;
 #include <iostream>
+#include <map>
 
 #include "niscopew.h"
 
@@ -385,35 +387,8 @@ typedef enum {
 	Immediate = NISCOPE_VAL_IMMEDIATE_TRIGGER
 } niScope_TriggerType;
 
-/* this doesn't work with non-integer enum values (here: char arrays)
-typedef enum {
-	Immediate = NISCOPE_VAL_IMMEDIATE,
-	External = NISCOPE_VAL_EXTERNAL,
-	SWTrig = NISCOPE_VAL_SW_TRIG_FUNC,
-	TTL0 = NISCOPE_VAL_TTL0,
-	TTL1 = NISCOPE_VAL_TTL1,
-	TTL2 = NISCOPE_VAL_TTL2,
-	TTL3 = NISCOPE_VAL_TTL3,
-	TTL4 = NISCOPE_VAL_TTL4,
-	TTL5 = NISCOPE_VAL_TTL5,
-	TTL6 = NISCOPE_VAL_TTL6,
-	TTL7 = NISCOPE_VAL_TTL7,
-	ECL0 = NISCOPE_VAL_ECL0,
-	ECL1 = NISCOPE_VAL_ECL1,
-	PXIStar = NISCOPE_VAL_PXI_STAR,
-	RTSI0 = NISCOPE_VAL_RTSI_0,
-	RTSI1 = NISCOPE_VAL_RTSI_1,
-	RTSI2 = NISCOPE_VAL_RTSI_2,
-	RTSI3 = NISCOPE_VAL_RTSI_3,
-	RTSI4 = NISCOPE_VAL_RTSI_4,
-	RTSI5 = NISCOPE_VAL_RTSI_5,
-	RTSI6 = NISCOPE_VAL_RTSI_6,
-	RTSI7 = NISCOPE_VAL_RTSI_7,
-	PFI0 = NISCOPE_VAL_PFI_0,
-	PFI1 = NISCOPE_VAL_PFI_1,
-	PFI2 = NISCOPE_VAL_PFI_2
-} niScope_TriggerSource;
-*/
+class niScope_TriggerSource {
+};
 
 typedef enum {
 	ReadPointer = NISCOPE_VAL_READ_POINTER,
@@ -617,7 +592,7 @@ BOOST_PYTHON_MODULE(pyniscope) {
 		.value("DdcDataProcessingMode", DdcDataProcessingMode)
 		.value("DdcEnabled", DdcEnabled)
 		.value("FetchInterleavedIQData", FetchInterleavedIQData)
-		//		.value("FrequencyTranslationEnabled", FrequencyTranslationEnabled)
+		//.value("FrequencyTranslationEnabled", FrequencyTranslationEnabled)
 		.value("DdcQSource", DdcQSource)
 		.value("DdcFrequencyTranslationPhaseI", DdcFrequencyTranslationPhaseI)
 		.value("DdcFrequencyTranslationPhaseQ", DdcFrequencyTranslationPhaseQ)
@@ -783,4 +758,34 @@ BOOST_PYTHON_MODULE(pyniscope) {
 		.value("SpecificDriverRevision", SpecificDriverRevision)
 		.value("SpecificDriverVendor", SpecificDriverVendor)
 		.value("SupportedInstrumentModels", SupportedInstrumentModels);
-}
+
+	// values enumerators - 1st one is mapped with the help of a class as C/C++ enums cannot be of type char*
+	object classTriggerSource = class_<niScope_TriggerSource>("TriggerSource", init<>());
+	classTriggerSource.attr("Immediate") = NISCOPE_VAL_IMMEDIATE;
+	classTriggerSource.attr("External") = NISCOPE_VAL_EXTERNAL;
+	classTriggerSource.attr("SWTrig") = NISCOPE_VAL_SW_TRIG_FUNC;
+	classTriggerSource.attr("TTL0") = NISCOPE_VAL_TTL0;
+	classTriggerSource.attr("TTL1") = NISCOPE_VAL_TTL1;
+	classTriggerSource.attr("TTL2") = NISCOPE_VAL_TTL2;
+	classTriggerSource.attr("TTL3") = NISCOPE_VAL_TTL3;
+	classTriggerSource.attr("TTL4") = NISCOPE_VAL_TTL4;
+	classTriggerSource.attr("TTL5") = NISCOPE_VAL_TTL5;
+	classTriggerSource.attr("TTL6") = NISCOPE_VAL_TTL6;
+	classTriggerSource.attr("TTL7") = NISCOPE_VAL_TTL7;
+	classTriggerSource.attr("ECL0") = NISCOPE_VAL_ECL0;
+	classTriggerSource.attr("ECL1") = NISCOPE_VAL_ECL1;
+	classTriggerSource.attr("PXIStar") = NISCOPE_VAL_PXI_STAR;
+	classTriggerSource.attr("RTSI0") = NISCOPE_VAL_RTSI_0;
+	classTriggerSource.attr("RTSI1") = NISCOPE_VAL_RTSI_1;
+	classTriggerSource.attr("RTSI2") = NISCOPE_VAL_RTSI_2;
+	classTriggerSource.attr("RTSI3") = NISCOPE_VAL_RTSI_3;
+	classTriggerSource.attr("RTSI4") = NISCOPE_VAL_RTSI_4;
+	classTriggerSource.attr("RTSI5") = NISCOPE_VAL_RTSI_5;
+	classTriggerSource.attr("RTSI6") = NISCOPE_VAL_RTSI_6;
+	classTriggerSource.attr("RTSI7") = NISCOPE_VAL_RTSI_7;
+	classTriggerSource.attr("PFI0") = NISCOPE_VAL_PFI_0;
+	classTriggerSource.attr("PFI1") = NISCOPE_VAL_PFI_1;
+	classTriggerSource.attr("PFI2") = NISCOPE_VAL_PFI_2;
+	
+	
+	}

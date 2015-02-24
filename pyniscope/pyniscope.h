@@ -1,6 +1,6 @@
 /*
 	Copyright (c) 2014 Vincent Paeder
-	
+
 	This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -128,7 +128,7 @@ public:
 	list RevisionQuery();
 	list SelfTest();
 	int GetStreamEndpointHandle(std::string streamName);
-	
+
 	list ErrorHandler(int errorCode);
 	std::string GetError(int errorCode);
 	std::string GetErrorMessage(int errorCode);
@@ -547,7 +547,7 @@ typedef enum {
 	LowHigh = NISCOPE_VAL_MEAS_LOW_HIGH,
 	MinMax = NISCOPE_VAL_MEAS_MIN_MAX,
 	BaseTop = NISCOPE_VAL_MEAS_BASE_TOP
-	
+
 } niScope_AttrMeasPercentageMethodValues;
 
 typedef enum {
@@ -708,7 +708,7 @@ typedef enum {
 typedef enum {
 	Error = NISCOPE_VAL_ERROR_REPORTING_ERROR,
 	Warning = NISCOPE_VAL_ERROR_REPORTING_WARNING,
-	Disabled = NISCOPE_VAL_ERROR_REPORTING_DISABLED	
+	Disabled = NISCOPE_VAL_ERROR_REPORTING_DISABLED
 } niScope_AttrOverflowErrorReportingValues;
 
 typedef enum {
@@ -1051,7 +1051,7 @@ BOOST_PYTHON_MODULE(pyniscope) {
 	classTriggerSource.attr("PFI0") = NISCOPE_VAL_PFI_0;
 	classTriggerSource.attr("PFI1") = NISCOPE_VAL_PFI_1;
 	classTriggerSource.attr("PFI2") = NISCOPE_VAL_PFI_2;
-	
+
 	enum_<niScope_TriggerType>("TriggerType")
 		.value("Edge", Edge)
 		.value("Hysteresis", Hysteresis)
@@ -1060,14 +1060,14 @@ BOOST_PYTHON_MODULE(pyniscope) {
 		.value("Software", Software)
 		.value("TV", TV)
 		.value("Immediate", Immediate);
-	
+
 	enum_<niScope_AttrRelativeToValues>("AttrRelativeToValues")
 		.value("ReadPointer", ReadPointer)
 		.value("Pretrigger", Pretrigger)
 		.value("Now", Now)
 		.value("Start", Start)
 		.value("Trigger", Trigger);
-	
+
 	enum_<niScope_AttrTriggerModifierValues>("AttrTriggerModifierValues")
 		.value("NoTriggerMod", NoTriggerMod)
 		.value("Auto", Auto)
@@ -1079,32 +1079,32 @@ BOOST_PYTHON_MODULE(pyniscope) {
 		.value("HFReject", HFReject)
 		.value("LFReject", LFReject)
 		.value("ACPlusHFReject", ACPlusHFReject);
-	
+
 	enum_<niScope_AttrTriggerSlopeValues>("AttrTriggerSlopeValues")
 		.value("Positive", Positive)
 		.value("Negative", Negative);
-	
+
 	enum_<niScope_AttrAcquisitionTypeValues>("AttrAcquisitionTypeValues")
 		.value("Normal", Normal)
 		.value("Flexres", Flexres)
 		.value("DDC", DDC);
-	
+
 	enum_<niScope_AttrInterpolationValues>("AttrInterpolationValues")
 		.value("NoInterpolation", NoInterpolation)
 		.value("SineX", SineX)
 		.value("Linear", Linear);
-	
+
 	enum_<niScope_TriggerOutputEvent>("TriggerOutputEvent")
 		.value("NoEvent", NoEvent)
 		.value("StopTriggerEvent", StopTriggerEvent)
 		.value("StartTriggerEvent", StartTriggerEvent);
-	
+
 	enum_<niScope_RISMethods>("RISMethods")
 		.value("ExactNumAverages", ExactNumAverages)
 		.value("MinNumAverages", MinNumAverages)
 		.value("Incomplete", Incomplete)
 		.value("LimitedBinWidth", LimitedBinWidth);
-	
+
 	enum_<niScope_SoftwareTriggerTypes>("SoftwareTriggerTypes")
 		.value("TriggerStart", TriggerStart)
 		.value("TriggerArmReference", TriggerArmReference)
@@ -1141,4 +1141,220 @@ BOOST_PYTHON_MODULE(pyniscope) {
 	classClockSource.attr("ClkIn") = NISCOPE_VAL_CLK_IN;
 	classClockSource.attr("ClkOut") = NISCOPE_VAL_CLK_OUT;
 	classClockSource.attr("Internal10MHzOsc") = NISCOPE_VAL_INTERNAL10MHZ_OSC;
+
+	enum_<niScope_AttrTVTriggerPolarityValues>("AttrTVTriggerPolarityValues")
+		.value("Positive", TVPositive)
+		.value("Negative", TVNegative);
+
+	enum_<niScope_AttrTVTriggerEventValues>("AttrTVTriggerEventValues")
+		.value("Field1", Field1)
+		.value("Field2", Field2)
+		.value("AnyField", AnyField)
+		.value("AnyLine", AnyLine)
+		.value("LineNumber", LineNumber);
+
+	enum_<niScope_AttrSampleModeValues>("AttrSampleModeValues")
+		.value("RealTime", RealTime)
+		.value("EquivalentTime", EquivalentTime);
+
+	enum_<niScope_AttrExportSignalValues>("AttrExportSignalValues")
+		.value("RefTrigger", RefTrigger)
+		.value("StartTrigger", StartTrigger)
+		.value("EndOfAcquisitionEvent", EndOfAcquisitionEvent)
+		.value("EndOfRecordEvent", EndOfRecordEvent)
+		.value("AdvanceTrigger", AdvanceTrigger)
+		.value("ReadyForAdvanceEvent", ReadyForAdvanceEvent)
+		.value("ReadyForStartEvent", ReadyForStartEvent)
+		.value("ReadyForRefEvent", ReadyForRefEvent)
+		.value("5VOut", FiveVOut)
+		.value("RefClock", RefClock)
+		.value("SampleClock", SampleClock);
+
+	enum_<niScope_AttrTriggerWindowModeValues>("AttrTriggerWindowModeValues")
+		.value("EnteringWindow", EnteringWindow)
+		.value("LeavingWindow", LeavingWindow);
+
+	enum_<niScope_AttrGeneralDefinedValues>("AttrGeneralDefinedValues")
+		.value("Input", Input)
+		.value("Output", Output)
+		.value("None", None)
+		.value("True", True)
+		.value("False", False);
+
+	enum_<niScope_AttrCalibrationOperationValues>("AttrCalibrationOperationValues")
+		.value("SelfCalibration", SelfCalibration)
+		.value("ExternalCalibration", ExternalCalibration)
+		.value("RestoreFactoryCalibration", RestoreFactoryCalibration)
+		.value("ClearEEPROM", ClearEEPROM);
+
+	enum_<niScope_AttrMaxTimeValues>("AttrMaxTimeValues")
+		.value("Infinite", MaxTimeInfinite)
+		.value("Immediate", MaxTimeImmediate);
+
+	enum_<niScope_AttrAcquisitionStatusValues>("AttrAcquisitionStatusValues")
+		.value("Complete", Complete)
+		.value("InProgress", InProgress)
+		.value("Unknown", Unknown);
+
+	enum_<niScope_AttrMeasFilterTypeValues>("AttrMeasFilterTypeValues")
+		.value("LowPass", LowPass)
+		.value("HighPass", HighPass)
+		.value("BandPass", BandPass)
+		.value("BandStop", BandStop);
+
+	enum_<niScope_AttrMeasPercentageMethodValues>("AttrMeasPercentageMethodValues")
+		.value("LowHigh", LowHigh)
+		.value("MinMax", MinMax)
+		.value("BaseTop", BaseTop);
+
+	enum_<niScope_AttrMeasRefLevelUnitsValues>("AttrMeasRefLevelUnitsValues")
+		.value("Voltage", Voltage)
+		.value("Percentage", Percentage);
+
+	enum_<niScope_AttrWaveformMeasurementFunctionValues>("AttrWaveformMeasurementFunctionValues")
+		.value("AllMeasurements", AllMeasurements)
+		.value("RiseTime", RiseTime)
+		.value("FallTime", FallTime)
+		.value("Frequency", Frequency)
+		.value("Period", Period)
+		.value("VoltageRMS", VoltageRMS)
+		.value("VoltagePeakToPeak", VoltagePeakToPeak)
+		.value("VoltageMax", VoltageMax)
+		.value("VoltageMin", VoltageMin)
+		.value("VoltageHigh", VoltageHigh)
+		.value("VoltageLow", VoltageLow)
+		.value("VoltageAverage", VoltageAverage)
+		.value("WidthNeg", WidthNeg)
+		.value("WidthPos", WidthPos)
+		.value("DutyCycleNeg", DutyCycleNeg)
+		.value("DutyCyclePos", DutyCyclePos)
+		.value("Amplitude", Amplitude)
+		.value("VoltageCycleRMS", VoltageCycleRMS)
+		.value("VoltageCycleAverage", VoltageCycleAverage)
+		.value("Overshoot", Overshoot)
+		.value("Preshoot", Preshoot)
+		.value("LowRefVolts", LowRefVolts)
+		.value("MidRefVolts", MidRefVolts)
+		.value("HighRefVolts", HighRefVolts)
+		.value("Area", Area)
+		.value("CycleArea", CycleArea)
+		.value("Integral", Integral)
+		.value("VoltageBase", VoltageBase)
+		.value("VoltageTop", VoltageTop)
+		.value("FFTFrequency", FFTFrequency)
+		.value("FFTAmplitude", FFTAmplitude)
+		.value("RiseSlewRate", RiseSlewRate)
+		.value("FallSlewRate", FallSlewRate)
+		.value("ACEstimate", ACEstimate)
+		.value("DCEstimate", DCEstimate)
+		.value("TimeDelay", TimeDelay)
+		.value("AveragePeriod", AveragePeriod)
+		.value("AverageFrequency", AverageFrequency)
+		.value("VoltageBaseToTop", VoltageBaseToTop)
+		.value("PhaseDelay", PhaseDelay);
+
+	enum_<niScope_AttrVoltageHistogramValues>("AttrVoltageHistogramValues")
+		.value("Mean",VMean)
+		.value("StDev",VStDev)
+		.value("PeakToPeak",VPeakToPeak)
+		.value("Median",VMedian)
+		.value("Hits",VHits)
+		.value("Max",VMax)
+		.value("Min",VMin)
+		.value("MeanPlusStDev",VMeanPlusStDev)
+		.value("MeanPlus2StDev",VMeanPlus2StDev)
+		.value("MeanPlus3StDev",VMeanPlus3StDev)
+		.value("Mode",VMode)
+		.value("NewHits",VNewHits);
+
+	enum_<niScope_AttrTimeHistogramValues>("AttrTimeHistogramValues")
+		.value("Mean",TMean)
+		.value("StDev",TStDev)
+		.value("PeakToPeak",TPeakToPeak)
+		.value("Median",TMedian)
+		.value("Hits",THits)
+		.value("Max",TMax)
+		.value("Min",TMin)
+		.value("MeanPlusStDev",TMeanPlusStDev)
+		.value("MeanPlus2StDev",TMeanPlus2StDev)
+		.value("MeanPlus3StDev",TMeanPlus3StDev)
+		.value("Mode",TMode)
+		.value("NewHits",TNewHits);
+
+	enum_<niScope_AttrArrayMeasurementsValues>("AttrArrayMeasurementsValues")
+		.value("NoMeasurement",NoMeasurement)
+		.value("LastAcqHistogram",LastAcqHistogram)
+		.value("PhaseSpectrum",PhaseSpectrum)
+		.value("FFTAmpSpectrumVoltsRMS",FFTAmpSpectrumVoltsRMS)
+		.value("MultiAcqVoltageHistogram",MultiAcqVoltageHistogram)
+		.value("MultiAcqTimeHistogram",MultiAcqTimeHistogram)
+		.value("ArrayIntegral",ArrayIntegral)
+		.value("Derivative",Derivative)
+		.value("Inverse",Inverse)
+		.value("HanningWindow",HanningWindow)
+		.value("FlatTopWindow",FlatTopWindow)
+		.value("PolynomialInterpolation",PolynomialInterpolation)
+		.value("MultiplyChannels",MultiplyChannels)
+		.value("AddChannels",AddChannels)
+		.value("SubtractChannels",SubtractChannels)
+		.value("DivideChannels",DivideChannels)
+		.value("MultiAcqAverage",MultiAcqAverage)
+		.value("ButterworthFilter",ButterworthFilter)
+		.value("ChebyshevFilter",ChebyshevFilter)
+		.value("FFTAmpSpectrumDB",FFTAmpSpectrumDB)
+		.value("HammingWindow",HammingWindow)
+		.value("WindowedFIRFilter",WindowedFIRFilter)
+		.value("BesselFilter",BesselFilter)
+		.value("TriangleWindow",TriangleWindow)
+		.value("BlackmanWindow",BlackmanWindow)
+		.value("ArrayOffset",ArrayOffset)
+		.value("ArrayGain",ArrayGain);
+
+	enum_<niScope_AttrSymmetryTypeValues>("AttrSymmetryTypeValues")
+		.value("Even",Even)
+		.value("Odd",Odd);
+
+	enum_<niScope_AttrSymmetryValues>("AttrSymmetryValues")
+		.value("Symmetric", Symmetric)
+		.value("Asymmetric", Asymmetric);
+
+	enum_<niScope_AttrDDCDiscriminatorFIRInputSourceValues>("AttrDDCDiscriminatorFIRInputSourceValues")
+		.value("Phase", Phase)
+		.value("Magnitude", Magnitude)
+		.value("Resampler", Resampler);
+
+	enum_<niScope_AttrDDCFilterCoefficientTypeValues>("AttrDDCFilterCoefficientTypeValues")
+		.value("PFIR", PFIR)
+		.value("DiscriminatorFIR", DiscriminatorFIR);
+
+	enum_<niScope_AttrDDCOutputSourceValues>("AttrDDCOutputSourceValues")
+		.value("I", IData)
+		.value("Magnitude", MagnitudeData)
+		.value("Frequency", FreqData)
+		.value("Q", QData)
+		.value("Phase", PhaseData);
+
+	enum_<niScope_AttrDDCDataTypeValues>("AttrDDCDataTypeValues")
+		.value("Real", Real)
+		.value("Complex", Complex);
+
+	enum_<niScope_AttrChannelTerminalConfigurationValues>("AttrChannelTerminalConfigurationValues")
+		.value("SingleEnded", SingleEnded)
+		.value("UnbalancedDifferential", UnbalancedDifferential)
+		.value("Differential", Differential);
+
+	enum_<niScope_AttrFlexFIRAntialiasFilterTypeValues>("AttrFlexFIRAntialiasFilterTypeValues")
+		.value("Standard48Tap", Standard48Tap)
+		.value("Hanning48Tap", Hanning48Tap)
+		.value("Hanning16Tap", Hanning16Tap)
+		.value("Hanning8Tap", Hanning8Tap);
+
+	enum_<niScope_AttrOverflowErrorReportingValues>("AttrOverflowErrorReportingValues")
+		.value("Error", Error)
+		.value("Warning", Warning)
+		.value("Disabled", Disabled);
+
+	enum_<niScope_AttrRefTriggerDetectorLocationValues>("AttrRefTriggerDetectorLocationValues")
+		.value("AnalogDetectionCircuit", AnalogDetectionCircuit)
+		.value("DDCOutput", DDCOutput);
 }
